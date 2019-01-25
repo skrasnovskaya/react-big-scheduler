@@ -24,11 +24,11 @@ class BodyView extends Component {
                 if(!!header.nonWorkingTime)
                     style = {...style, backgroundColor: config.nonWorkingTimeBodyBgColor};
                 if(!!behaviors.getNonAgendaViewBodyCellBgColorFunc){
-                    let cellBgColor = behaviors.getNonAgendaViewBodyCellBgColorFunc(schedulerData, item.slotId, header);
+                    let cellBgColor = behaviors.getNonAgendaViewBodyCellBgColorFunc(schedulerData, item.slotId, header, item);
                     if(!!cellBgColor)
                         style = {...style, backgroundColor: cellBgColor};
                 }
-                const customCellContent = (!!behaviors.getNonAgendaViewBodyCellContent) ? behaviors.getNonAgendaViewBodyCellContent(schedulerData, item.slotId, header) : null;
+                const customCellContent = (!!behaviors.getNonAgendaViewBodyCellContent) ? behaviors.getNonAgendaViewBodyCellContent(schedulerData, item.slotId, header, item) : null;
                 return (
                     <td key={key} style={style}><div>{customCellContent}</div></td>
                 )
