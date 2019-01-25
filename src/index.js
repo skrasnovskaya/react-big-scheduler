@@ -112,6 +112,7 @@ class Scheduler extends Component {
         onScrollRight: PropTypes.func,
         onScrollTop: PropTypes.func,
         onScrollBottom: PropTypes.func,
+        resolveScrollbarSizeOnUpdate: PropTypes.bool,
     }
 
     componentDidMount(props, state){
@@ -310,7 +311,11 @@ class Scheduler extends Component {
     }
 
     resolveScrollbarSize = () => {
-        const { schedulerData } = this.props;
+      const { schedulerData, resolveScrollbarSizeOnUpdate = true } = this.props;
+
+      // prevent scrollbar resize -> DnD recursion issue
+      if(!resolveScrollbarSizeOnUpdate) return null;
+
         let contentScrollbarHeight = 17, 
             contentScrollbarWidth = 17, 
             resourceScrollbarHeight = 17,
