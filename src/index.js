@@ -263,7 +263,7 @@ class Scheduler extends Component {
         let schedulerHeader = <div />;
         if(config.headerEnabled) {
             schedulerHeader = (
-                <Row type="flex" align="middle" justify="space-between" style={{marginBottom: '24px'}}>
+                <Row type="flex" align="middle" justify="space-between" style={{marginBottom: '24px'}} className="scheduler-header">
                     {leftCustomHeader}
                     <Col>
                         <div className='header2-text'>
