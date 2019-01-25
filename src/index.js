@@ -285,9 +285,11 @@ class Scheduler extends Component {
                     </Col>
                     {centerCustomHeader}
                     <Col>
+                        <div className="viewtype-buttons">
                         <RadioGroup defaultValue={defaultValue} size="default" onChange={this.onViewChange}>
                             {radioButtonList}
                         </RadioGroup>
+                        </div>
                     </Col>
                     {rightCustomHeader}
                 </Row>
