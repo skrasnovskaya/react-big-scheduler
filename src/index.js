@@ -93,6 +93,7 @@ class Scheduler extends Component {
         updateEventEnd: PropTypes.func,
         moveEvent: PropTypes.func,
         leftCustomHeader: PropTypes.object,
+        centerCustomHeader: PropTypes.object,
         rightCustomHeader: PropTypes.object,
         newEvent: PropTypes.func,
         subtitleGetter: PropTypes.func,
@@ -143,7 +144,7 @@ class Scheduler extends Component {
     }
 
     render() {
-        const { schedulerData, leftCustomHeader, rightCustomHeader } = this.props;
+        const { schedulerData, leftCustomHeader, rightCustomHeader, centerCustomHeader = null } = this.props;
         const {renderData, viewType, showAgenda, isEventPerspective, config} = schedulerData;
         const width = config.schedulerWidth;
         const calendarPopoverEnabled = config.calendarPopoverEnabled;
@@ -281,6 +282,7 @@ class Scheduler extends Component {
                                     onClick={this.goNext}/>
                         </div>
                     </Col>
+                    {centerCustomHeader}
                     <Col>
                         <RadioGroup defaultValue={defaultValue} size="default" onChange={this.onViewChange}>
                             {radioButtonList}
