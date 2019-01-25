@@ -28,8 +28,9 @@ class BodyView extends Component {
                     if(!!cellBgColor)
                         style = {...style, backgroundColor: cellBgColor};
                 }
+                const customCellContent = behaviors.getNonAgendaViewBodyCellContent || null;
                 return (
-                    <td key={key} style={style}><div></div></td>
+                    <td key={key} style={style}><div>{customCellContent}</div></td>
                 )
             });
 

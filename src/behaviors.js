@@ -114,6 +114,7 @@ export default {
     getCustomDateFunc: undefined,
     // getNonAgendaViewBodyCellBgColorFunc: getNonAgendaViewBodyCellBgColor,
     getNonAgendaViewBodyCellBgColorFunc: undefined, 
+    getNonAgendaViewBodyCellContent: null,
     getScrollSpecialMomentFunc: getScrollSpecialMoment,
     getDateLabelFunc: getDateLabel,
     getEventTextFunc: getEventText,
