@@ -153,9 +153,9 @@ export default class SchedulerData {
     setViewType(viewType = ViewTypes.Week, showAgenda = false, isEventPerspective = false) {
         this.showAgenda = showAgenda;
         this.isEventPerspective = isEventPerspective;
-        this.cellUnit = CellUnits.Day;
 
         if(this.viewType !== viewType) {
+            this.cellUnit = CellUnits.Day;
             let date = this.startDate;
 
             if(viewType === ViewTypes.Custom || viewType === ViewTypes.Custom1 || viewType === ViewTypes.Custom2) {
