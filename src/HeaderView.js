@@ -23,6 +23,23 @@ class HeaderView extends Component {
         let headerList = [];
         let style = {};
         if(cellUnit === CellUnits.Hour){
+
+          if (!!config.nonTimeDayView) {
+            const item = headers[0];
+            let datetime = localeMoment(item.time);
+            let pList = config.nonAgendaDayCellHeaderFormat.split('|').map(item => datetime.format(item))[0];
+           
+            const headerElement = (
+              <th className="header3-text day-view no-time">
+                  <div>
+                      {pList}
+                  </div>
+              </th>
+            );
+            headerList.push(headerElement);
+
+          } else {
+
             headers.forEach((item, index) => {
                 if(index % minuteStepsInHour === 0){
                     let datetime = localeMoment(item.time);
@@ -56,6 +73,7 @@ class HeaderView extends Component {
                     headerList.push(element);
                 }
             })
+          };
         }
         else {
             headerList = headers.map((item, index) => {
