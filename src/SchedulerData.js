@@ -804,7 +804,7 @@ export default class SchedulerData {
 
             resourceEvents.hasSummary = hasSummary;
             let rowsCount = maxRowsCount > this.getCellMaxEvents() ? this.getCellMaxEvents() : maxRowsCount;
-            resourceEvents.rowHeight = rowsCount === 0 ? this.config.eventItemLineHeight + 2 : rowsCount * this.config.eventItemLineHeight + (this.config.creatable && this.config.checkConflict === false ? 20 : 2);
+            resourceEvents.rowHeight = this.config.eventItemLineHeight + 2 ;//rowsCount === 0 ? this.config.eventItemLineHeight + 2 : rowsCount * this.config.eventItemLineHeight + (this.config.creatable && this.config.checkConflict === false ? 20 : 2);
             if(hasSummary)
                 resourceEvents.rowHeight = resourceEvents.rowHeight + this.config.eventItemLineHeight;
             if(this.config.nonAgendaSlotMinHeight !== 0 && resourceEvents.rowHeight < this.config.nonAgendaSlotMinHeight)
