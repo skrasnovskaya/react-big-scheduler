@@ -198,12 +198,12 @@ class ResourceEvents extends Component {
                         let isStart = eventStart >= durationStart;
                         let isEnd = eventEnd <= durationEnd;
                         let offset = 0;
-                        if(isStart){
+                        if(isStart && cellUnit !== CellUnits.Hour){
                           offset = cellWidth/2;
                         }
                         let left = index*cellWidth + offset; 
                         offset = 0;
-                        if(isEnd) {
+                        if(isEnd && cellUnit !== CellUnits.Hour) {
                           offset = (evt.span > 1) ? cellWidth : cellWidth/2 ;
                         }
                         
