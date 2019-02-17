@@ -239,7 +239,7 @@ class Scheduler extends Component {
                             </div>
                             <div className="scrollable-content" style={schedulerContentStyle} ref={this.schedulerContentRef} onMouseOver={this.onSchedulerContentMouseOver} onMouseOut={this.onSchedulerContentMouseOut} onScroll={this.onSchedulerContentScroll} >
                                 <div style={{width: schedulerWidth, height: contentHeight}}>
-                                    <div className="scheduler-content">
+                                    <div className="scheduler-content" dir="ltr">
                                         <table className="scheduler-content-table" >
                                             <tbody>
                                                 {resourceEventsList}

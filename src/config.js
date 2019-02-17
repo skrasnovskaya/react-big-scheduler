@@ -74,4 +74,7 @@ export default {
         {viewName: 'Quarter', viewType: ViewTypes.Quarter, showAgenda: false, isEventPerspective: false},
         {viewName: 'Year', viewType: ViewTypes.Year, showAgenda: false, isEventPerspective: false},
     ],
+
+    nonTimeDayView: false,
+    isRtl: false,
 }

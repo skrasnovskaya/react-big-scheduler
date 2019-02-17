@@ -112,10 +112,22 @@ class ResourceEvents extends Component {
         document.documentElement.removeEventListener('mousemove', this.doDrag, false);
         document.documentElement.removeEventListener('mouseup', this.stopDrag, false);
 
-        let startTime = headers[leftIndex].time;
-        let endTime = resourceEvents.headerItems[rightIndex - 1].end;
-        if(cellUnit !== CellUnits.Hour)
-            endTime = localeMoment(resourceEvents.headerItems[rightIndex - 1].start).hour(23).minute(59).second(59).format(DATETIME_FORMAT);
+        let startHeaders = config.isRtl ? [...headers].reverse() : headers;
+        let endHeaders = config.isRtl ? [...resourceEvents.headerItems].reverse() : resourceEvents.headerItems;
+
+        let startTime = startHeaders[leftIndex].time;
+        let endTime = endHeaders[rightIndex - 1].end;
+        if(cellUnit !== CellUnits.Hour) {
+            endTime = localeMoment(endHeaders[rightIndex - 1].start);
+            endTime = config.isRtl ? endTime.format(DATETIME_FORMAT) : endTime.hour(23).minute(59).second(59).format(DATETIME_FORMAT);
+        }
+
+        if (config.isRtl) {
+          const tmp = startTime;
+          startTime = endTime;
+          endTime = tmp;
+        }
+
         let slotId = resourceEvents.slotId;
         let slotName = resourceEvents.slotName;
 
