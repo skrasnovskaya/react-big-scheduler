@@ -20,6 +20,8 @@ export default class SchedulerData {
         this.resizing = false;
         this.scrollToSpecialMoment = false;
 
+        this.customWidth = 0;
+
         this.localeMoment = moment;
         if(!!localeMoment)
             this.localeMoment = localeMoment;
@@ -121,6 +123,10 @@ export default class SchedulerData {
     setScrollToSpecialMoment(scrollToSpecialMoment){
         if(this.config.scrollToSpecialMomentEnabled)
             this.scrollToSpecialMoment = scrollToSpecialMoment;
+    }
+
+    setContentWidth(width) {
+      this.customWidth = width;
     }
 
     getScrollToSpecialMoment(){
@@ -280,6 +286,20 @@ export default class SchedulerData {
     }
 
     getContentCellWidth(){
+      if (this.config.dynamicCellWidth && this.customWidth) {
+        const adaptiveWidth = Math.ceil(this.customWidth / this.headers.length);
+        return this.viewType === ViewTypes.Week ? Math.max(this.config.weekCellWidth, adaptiveWidth) : (
+          this.viewType === ViewTypes.Day ? Math.max(this.config.dayCellWidth, adaptiveWidth) : (
+              this.viewType === ViewTypes.Month ? Math.max(this.config.monthCellWidth, adaptiveWidth) : (
+                  this.viewType === ViewTypes.Year ? this.config.yearCellWidth : (
+                      this.viewType === ViewTypes.Quarter ? this.config.quarterCellWidth : 
+                      Math.max(this.config.customCellWidth, adaptiveWidth)
+                  )
+              )
+          )
+        ); 
+      }
+
         return this.viewType === ViewTypes.Week ? this.config.weekCellWidth : (
             this.viewType === ViewTypes.Day ? this.config.dayCellWidth : (
                 this.viewType === ViewTypes.Month ? this.config.monthCellWidth : (
