@@ -216,7 +216,7 @@ class ResourceEvents extends Component {
                         let left = index*cellWidth + offset; 
                         offset = 0;
                         if(isEnd && cellUnit !== CellUnits.Hour) {
-                          offset = (evt.span > 1) ? cellWidth : cellWidth/2 ;
+                          offset = (evt.span > 1) ? (isStart ? cellWidth : cellWidth / 2) : cellWidth/2 ;
                         }
                         
                         let width = (evt.span * cellWidth - (index > 0 ? 5 : 6)) > 0 ? (evt.span * cellWidth -offset) : 0;
