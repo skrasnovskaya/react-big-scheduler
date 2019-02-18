@@ -538,7 +538,11 @@ export default class SchedulerData {
                         let nonWorkingTime = this.behaviors.isNonWorkingTimeFunc(this, time);
                         headers.push({ time: time, nonWorkingTime: nonWorkingTime });
     
-                        header = header.add(this.config.minuteStep, 'minutes');
+                        if(this.config.nonTimeDayView) {
+                          header = header.add(12, 'hours');
+                        } else {
+                          header = header.add(this.config.minuteStep, 'minutes');
+                        }
                     }
                 }
             }
@@ -572,7 +576,8 @@ export default class SchedulerData {
                     )
                 )
             )
-        )) : (this.cellUnit === CellUnits.Hour ?  start.add(this.config.minuteStep, 'minutes').format(DATETIME_FORMAT)
+        )) : (this.cellUnit === CellUnits.Hour
+            ? (this.config.nonTimeDayView ? start.add(12, 'hours').format(DATETIME_FORMAT) : start.add(this.config.minuteStep, 'minutes').format(DATETIME_FORMAT))
             : start.add(1, 'days').format(DATETIME_FORMAT));
         return {
             time:  header.time,
