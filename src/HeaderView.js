@@ -27,15 +27,20 @@ class HeaderView extends Component {
           if (!!config.nonTimeDayView) {
             const item = headers[0];
             let datetime = localeMoment(item.time);
-            let pList = config.nonAgendaDayCellHeaderFormat.split('|').map(item => datetime.format(item))[0];
+            let pList = config.nonAgendaDayCellHeaderFormat.split('|').map(item => datetime.format(item));
            
-            const headerElement = (
-              <th className="header3-text day-view no-time">
-                  <div>
-                      {pList}
-                  </div>
-              </th>
-            );
+            let headerElement;
+            if (typeof nonAgendaCellHeaderTemplateResolver === 'function') {
+              headerElement = nonAgendaCellHeaderTemplateResolver(schedulerData, item, pList, style);
+            } else {
+              headerElement = (
+                <th key={item.time} className="header3-text day-view no-time">
+                    <div>
+                        {pList[0]}
+                    </div>
+                </th>
+              );
+            }
             headerList.push(headerElement);
 
           } else {
