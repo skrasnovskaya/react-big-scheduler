@@ -73,6 +73,19 @@
     z-index: 1;
 }
 
+.scheduler-blocking-layer {
+  position: absolute;
+  top:0;
+  left:0;
+  z-index: 3;
+  background-color: rgba(255,255,255,0.35);
+}
+
+.scheduler-blocking-layer.rtl-layer {
+  right: 0;
+  left: initial;
+}
+
 table.resource-table, table.scheduler-bg-table, table.scheduler-table {
     width: 100%;
     margin: 0;
