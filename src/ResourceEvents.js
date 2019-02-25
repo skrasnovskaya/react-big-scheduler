@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {PropTypes} from 'prop-types'
+import moment from 'moment';
 import AddMore from './AddMore'
 import Summary from './Summary'
 import SelectedArea from './SelectedArea'
@@ -11,6 +12,15 @@ class ResourceEvents extends Component {
 
     constructor(props) {
         super(props);
+
+        const { disabledIndex, config, headers } = props.schedulerData;
+
+        this.disabledIndex = disabledIndex;
+        this.isRtl = config.isRtl;
+
+        if(this.isRtl) {
+          this.disabledIndex = headers.length - disabledIndex;
+        }
 
         this.state = {
             isSelecting: false,
@@ -66,6 +76,12 @@ class ResourceEvents extends Component {
         let rightIndex = Math.ceil(startX/cellWidth);
         let width = (rightIndex - leftIndex)*cellWidth;
 
+        if (this.isRtl) {
+          if(rightIndex > this.disabledIndex) return;
+        } else {
+          if(leftIndex < this.disabledIndex) return;
+        }        
+        
         this.setState({
             startX: startX,
             left: left,
@@ -94,6 +110,13 @@ class ResourceEvents extends Component {
         let rightIndex = Math.ceil(Math.max(startX, currentX)/cellWidth);
         rightIndex = rightIndex > headers.length ? headers.length : rightIndex;
         let width = (rightIndex - leftIndex)*cellWidth;
+
+        // Block select
+        if (this.isRtl) {
+          if(rightIndex > this.disabledIndex) return;
+        } else {
+          if(leftIndex < this.disabledIndex) return;
+        }
 
         this.setState({
             leftIndex: leftIndex,

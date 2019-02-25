@@ -21,6 +21,8 @@ export default class SchedulerData {
         this.scrollToSpecialMoment = false;
 
         this.customWidth = 0;
+        this.disabledIndex = -1;
+        this.edgeDate = null;
 
         this.localeMoment = moment;
         if(!!localeMoment)
@@ -127,6 +129,14 @@ export default class SchedulerData {
 
     setContentWidth(width) {
       this.customWidth = width;
+      this.events = [];
+      this._createHeaders();
+      this._createRenderData();
+    }
+
+    setEdgeDate(momentDate) {
+      this.edgeDate = moment(momentDate).isValid() ? moment(momentDate) : null;
+      this._createHeaders();
     }
 
     getScrollToSpecialMoment(){
@@ -518,8 +528,10 @@ export default class SchedulerData {
 
     _createHeaders() {
         let headers = [],
+            headerMoments = [],
             start = this.localeMoment(this.startDate),
             end = this.localeMoment(this.endDate),
+            edgeDate = this.edgeDate,
             header = start;
 
         if(this.showAgenda){
@@ -537,6 +549,7 @@ export default class SchedulerData {
                         let time = header.format(DATETIME_FORMAT);
                         let nonWorkingTime = this.behaviors.isNonWorkingTimeFunc(this, time);
                         headers.push({ time: time, nonWorkingTime: nonWorkingTime });
+                        headerMoments.push(header.clone());
     
                         if(this.config.nonTimeDayView) {
                           header = header.add(12, 'hours');
@@ -554,11 +567,48 @@ export default class SchedulerData {
                     {
                         let nonWorkingTime = this.behaviors.isNonWorkingTimeFunc(this, time);
                         headers.push({ time: time, nonWorkingTime: nonWorkingTime });
+                        headerMoments.push(header.clone());
                     }
 
                     header = header.add(1, 'days');
                 }
             }
+        }
+
+        this.disabledIndex = -1;
+        
+        if (moment.isMoment(edgeDate)) {
+          // check if edgeDate is in displayed range
+          const startCopy = this.localeMoment(this.startDate);
+
+          switch(true) {
+            case edgeDate.isSame(startCopy):
+              this.disabledIndex = 0;
+              if (this.cellUnit === CellUnits.Hour && this.config.nonTimeDayView) {
+                this.disabledIndex = 1;
+              }
+              break;
+            case edgeDate.isBetween(startCopy, end):
+              for (let i = 0; i < headerMoments.length; i++) {
+                if (edgeDate.isSame(headerMoments[i])) {
+                  this.disabledIndex = i;
+                  break;
+                }
+              }
+              for (let i = 0; i < this.disabledIndex; i++) {
+                headers[i].disabled = true;
+              }
+              break;
+            case edgeDate.isAfter(end):
+              this.disabledIndex = headerMoments.length;
+              headers.forEach(item => {
+                item.disabled = true;
+              });
+              break;
+            default:
+              this.disabledIndex = -1;
+              break;
+          }
         }
 
         this.headers = headers;

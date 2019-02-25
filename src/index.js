@@ -48,6 +48,7 @@ import ViewTypes from './ViewTypes'
 import CellUnits from './CellUnits'
 import SummaryPos from './SummaryPos'
 import SchedulerData from './SchedulerData'
+import BlockingLayer from './BlockingLayer'
 import DemoData from './DemoData'
 const RadioButton = Radio.Button;
 const RadioGroup = Radio.Group;
@@ -251,6 +252,7 @@ class Scheduler extends Component {
                                             <BodyView {...this.props}/>
                                         </table>
                                     </div>
+                                    <BlockingLayer {...this.props} />                                    
                                 </div>
                             </div>
                         </div>
