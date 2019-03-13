@@ -145,7 +145,9 @@ class ResourceEvents extends Component {
             endTime = config.isRtl ? endTime.format(DATETIME_FORMAT) : endTime.hour(23).minute(59).second(59).format(DATETIME_FORMAT);
         }
 
-        if (config.isRtl) {
+        const noTimeDayView = config.nonTimeDayView && (cellUnit === CellUnits.Hour); // Fix for custom day view (two half)
+
+        if (config.isRtl && !noTimeDayView) {
           const tmp = startTime;
           startTime = endTime;
           endTime = tmp;
